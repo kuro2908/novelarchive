@@ -1,6 +1,20 @@
 const app = document.getElementById('app');
 const navActions = document.getElementById('nav-actions');
 
+const LOADER_HTML = `
+    <div class="loader-container">
+        <div class="pyramid-loader">
+            <div class="wrapper">
+                <span class="side side1"></span>
+                <span class="side side2"></span>
+                <span class="side side3"></span>
+                <span class="side side4"></span>
+                <span class="shadow"></span>
+            </div>
+        </div>
+    </div>
+`;
+
 // --- Xử lý Theme (Sáng/Tối) - Chạy ngay lập tức ---
 (function() {
     const themeToggle = document.getElementById('theme-toggle');
@@ -25,7 +39,7 @@ const navActions = document.getElementById('nav-actions');
 // Router cơ bản dựa trên Hash
 async function router() {
     const hash = window.location.hash.slice(1) || '/';
-    app.innerHTML = '<div class="loader">Đang tải...</div>';
+    app.innerHTML = LOADER_HTML;
     navActions.innerHTML = '';
 
     try {
