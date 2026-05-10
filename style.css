@@ -8,16 +8,14 @@
   --muted: #71717a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-      --bg-color: #09090b;
-      --text-color: #fafafa;
-      --card-bg: #18181b;
-      --primary: #3b82f6;
-      --primary-hover: #60a5fa;
-      --border: #27272a;
-      --muted: #a1a1aa;
-  }
+[data-theme='dark'] {
+  --bg-color: #09090b;
+  --text-color: #fafafa;
+  --card-bg: #18181b;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --border: #27272a;
+  --muted: #a1a1aa;
 }
 
 * {
@@ -47,6 +45,11 @@ body {
   padding: 0 20px;
   z-index: 1000;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.navbar.nav-hidden {
+  transform: translateY(-100%);
 }
 
 .logo {
@@ -54,6 +57,33 @@ body {
   font-weight: 700;
   text-decoration: none;
   color: var(--primary);
+  white-space: nowrap;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.theme-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 15px;
+  font-size: 1rem;
+  color: var(--text-color);
+  transition: all 0.2s;
+}
+
+.theme-btn:hover {
+  background: var(--bg-color);
+  border-color: var(--primary);
 }
 
 #nav-actions a {
@@ -201,8 +231,73 @@ main#app {
 .btn.secondary:hover { background: var(--bg-color); }
 
 .loader {
-  text-align: center;
-  padding: 50px;
-  color: var(--muted);
   font-style: italic;
+}
+
+/* Nút Back to Top */
+.back-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-size: 1.2rem;
+  border: none;
+  outline: none;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  transform: scale(1.1);
+  background: var(--primary-hover);
+}
+
+/* Tối ưu tràn viền cho Mobile */
+@media (max-width: 600px) {
+  body {
+    padding-top: 60px;
+  }
+  main#app {
+    padding: 0; /* Xóa padding container */
+  }
+  .reader-container {
+    border-radius: 0; /* Xóa bo góc */
+    padding: 20px 15px; /* Giảm padding nội dung */
+    box-shadow: none; /* Xóa bóng */
+  }
+  .reader-title {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  .reader-content {
+    font-size: 1.05rem;
+  }
+  .novel-grid {
+    padding: 15px;
+  }
+  .chapter-list {
+    padding: 15px;
+  }
+  h2 {
+    padding: 0 15px;
+  }
+  p {
+    padding: 0 15px;
+  }
 }

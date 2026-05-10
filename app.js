@@ -110,8 +110,56 @@ async function renderChapter(folder, chapterId) {
         </div>
     `;
     
-    window.scrollTo(0, 0); // Lên đầu trang
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// 4. Xử lý hiệu ứng Cuộn (Ẩn/Hiện Navbar & Back to Top)
+let lastScrollTop = 0;
+const navbar = document.querySelector('.navbar');
+const backToTopBtn = document.createElement('button');
+backToTopBtn.innerHTML = '↑';
+backToTopBtn.className = 'back-to-top';
+document.body.appendChild(backToTopBtn);
+
+// --- Xử lý Theme (Sáng/Tối) ---
+const themeToggle = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme') || 'dark'; // Mặc định là Dark
+
+// Khởi tạo theme
+document.documentElement.setAttribute('data-theme', currentTheme);
+themeToggle.innerHTML = currentTheme === 'dark' ? '☀️' : '🌙';
+
+themeToggle.addEventListener('click', () => {
+    let theme = document.documentElement.getAttribute('data-theme');
+    let newTheme = theme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeToggle.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
+});
+
+window.addEventListener('scroll', () => {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Ẩn/Hiện Navbar
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+        navbar.classList.add('nav-hidden');
+    } else {
+        navbar.classList.remove('nav-hidden');
+    }
+    lastScrollTop = scrollTop;
+
+    // Hiện/Ẩn nút Back to Top
+    if (scrollTop > 500) {
+        backToTopBtn.classList.add('visible');
+    } else {
+        backToTopBtn.classList.remove('visible');
+    }
+});
+
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 // Lắng nghe sự kiện đổi URL
 window.addEventListener('hashchange', router);
