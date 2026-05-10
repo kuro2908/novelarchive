@@ -1,6 +1,27 @@
 const app = document.getElementById('app');
 const navActions = document.getElementById('nav-actions');
 
+// --- Xử lý Theme (Sáng/Tối) - Chạy ngay lập tức ---
+(function() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    
+    // Áp dụng theme ngay
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    if (themeToggle) {
+        themeToggle.innerHTML = currentTheme === 'dark' ? '☀️' : '🌙';
+        
+        themeToggle.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme');
+            const newTheme = theme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+    }
+})();
+
 // Router cơ bản dựa trên Hash
 async function router() {
     const hash = window.location.hash.slice(1) || '/';
@@ -120,23 +141,6 @@ const backToTopBtn = document.createElement('button');
 backToTopBtn.innerHTML = '↑';
 backToTopBtn.className = 'back-to-top';
 document.body.appendChild(backToTopBtn);
-
-// --- Xử lý Theme (Sáng/Tối) ---
-const themeToggle = document.getElementById('theme-toggle');
-const currentTheme = localStorage.getItem('theme') || 'dark'; // Mặc định là Dark
-
-// Khởi tạo theme
-document.documentElement.setAttribute('data-theme', currentTheme);
-themeToggle.innerHTML = currentTheme === 'dark' ? '☀️' : '🌙';
-
-themeToggle.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    let newTheme = theme === 'dark' ? 'light' : 'dark';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    themeToggle.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
-});
 
 window.addEventListener('scroll', () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;

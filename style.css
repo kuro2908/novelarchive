@@ -8,7 +8,8 @@
   --muted: #71717a;
 }
 
-[data-theme='dark'] {
+/* Đảm bảo selector có độ ưu tiên cao hơn */
+html[data-theme='dark'] {
   --bg-color: #09090b;
   --text-color: #fafafa;
   --card-bg: #18181b;
