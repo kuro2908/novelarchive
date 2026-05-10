@@ -319,28 +319,24 @@ main#app {
   font-style: italic;
 }
 
-/* Nút Back to Top */
+/* Nút Back to Top (Chevron) */
 .back-to-top {
   position: fixed;
   bottom: 25px;
   right: 20px;
-  width: 45px;
-  height: 45px;
-  background: var(--primary);
-  color: white;
+  width: 50px;
+  height: 50px;
+  background: var(--card-bg);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 1001;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  font-size: 1.2rem;
-  border: none;
-  outline: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  border: 1px solid var(--border);
 }
 
 .back-to-top.visible {
@@ -348,9 +344,46 @@ main#app {
   visibility: visible;
 }
 
-.back-to-top:hover {
-  transform: scale(1.1);
-  background: var(--primary-hover);
+/* From Uiverse.io by catraco */
+.back-to-top .container {
+  --color: var(--primary);
+  --size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+}
+
+.back-to-top .container .chevron-down {
+  position: absolute;
+  animation: keyframes-return .5s;
+}
+
+.back-to-top .container input:checked ~ .chevron-down {
+  animation: keyframes-rotate .5s;
+  transform: rotate(180deg);
+}
+
+.back-to-top .container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+@keyframes keyframes-rotate {
+  0% { transform: rotate(0deg); opacity: 0; }
+  100% { transform: rotate(-180deg); }
+}
+
+@keyframes keyframes-return {
+  0% { transform: rotate(-180deg); opacity: 0; }
+  100% { transform: rotate(0deg); }
 }
 
 /* Tối ưu tràn viền cho Mobile */
